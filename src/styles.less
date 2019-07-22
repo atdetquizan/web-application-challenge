@@ -2,6 +2,7 @@
 @import '~bootstrap/dist/css/bootstrap.min.css';
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~ngx-bootstrap/datepicker/bs-datepicker.css';
+@import '~perfect-scrollbar/css/perfect-scrollbar.css';
 
 @blueColor     : #224abe;
 @blueLigthColor: #4e73df;
@@ -330,10 +331,16 @@
 .legend-clients {
     margin-left : 15px;
     margin-right: 15px;
+    text-align: center;
 
     h4 {
         font-size    : 50px;
         margin-bottom: 0px;
         text-align   : center;
     }
+}
+
+.container-table {
+    max-height: 250px;
+    position: relative;
 }

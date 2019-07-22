@@ -6,12 +6,14 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
     styles: []
 })
 export class CardComponent implements OnInit {
+    @Input() hasAction = true;
     @Input() title: string;
     @Input() subtitle: string;
     @Output() eventClick: EventEmitter<any> = new EventEmitter();
     constructor() { }
 
     ngOnInit() {
+        console.log(this.hasAction);
     }
 
     onClickEvent() {

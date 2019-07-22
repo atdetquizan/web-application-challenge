@@ -13,6 +13,7 @@ import { SweetalertService } from 'src/app/services/sweetalert.service';
 })
 export class ClientsFormComponent implements OnInit {
     form: FormGroup;
+    maxDate: any;
     constructor(
         public bsModalRef: BsModalRef,
         private fb: FormBuilder,
@@ -20,6 +21,7 @@ export class ClientsFormComponent implements OnInit {
         private sweetalertService: SweetalertService
     ) {
         this.createform();
+        this.maxDate = new Date();
     }
 
     ngOnInit() {}
@@ -41,7 +43,10 @@ export class ClientsFormComponent implements OnInit {
         this.form = this.fb.group({
             name: [null, [Validators.required]],
             lastName: [null, [Validators.required]],
-            years: [null, [Validators.required]],
+            years: [
+                null,
+                [Validators.required, Validators.min(1), Validators.max(122)]
+            ],
             birthdate: [null, [Validators.required]]
         });
     }

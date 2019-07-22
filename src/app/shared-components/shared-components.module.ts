@@ -4,6 +4,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { CardComponent } from './card/card.component';
 import { ControlMessagesComponent } from './control-messages/control-messages.component';
+import { RouterModule } from '@angular/router';
 
 
 const components = [
@@ -15,7 +16,8 @@ const components = [
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
+        RouterModule
     ],
     declarations: components,
     exports: components

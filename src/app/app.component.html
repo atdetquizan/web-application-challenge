@@ -14,40 +14,7 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-                <app-card title="Clientes" subtitle="Liste de clientes" (eventClick)="onEventClick()">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Edad</th>
-                                <th>Fecha Nacimiento</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr *ngFor="let item of clientsList; let i = index">
-                                <th>{{ i + 1 }}</th>
-                                <td>{{ item.name }}</td>
-                                <td>{{ item.lastName }}</td>
-                                <td>{{ item.years }}</td>
-                                <td>{{ item.birthdate | date:'dd/mm/yyyy' }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </app-card>
-                <div class="d-flex justify-content-center">
-                    <div class="legend-clients">
-                        <h4>
-                            {{ getAverage() }}
-                        </h4>
-                        <small>PROMEDIO EDAD</small>
-                    </div>
-                    <div class="legend-clients">
-                        <h4>40</h4>
-                        <small>DESVIACION ESTÁNDAR</small>
-                    </div>
-                </div>
+                <router-outlet></router-outlet>
             </div>
             <!-- /.container-fluid -->
         </div>
