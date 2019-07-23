@@ -27,7 +27,7 @@
         <div class="col-md-12 form-group">
             <app-control-messages [control]="form.get('birthdate')">
                 <label>Fecha de nacimiento</label>
-                <input type="text" class="form-control" placeholder="Fecha de nacimiento" placement="top" bsDatepicker [maxDate]="maxDate" formControlName="birthdate">
+                <input type="text" class="form-control" placeholder="Fecha de nacimiento" placement="top" bsDatepicker [maxDate]="maxDate" formControlName="birthdate" [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }">
             </app-control-messages>
         </div>
     </div>

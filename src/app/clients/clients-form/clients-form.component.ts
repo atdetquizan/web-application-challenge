@@ -31,8 +31,10 @@ export class ClientsFormComponent implements OnInit {
 
     ngOnInit() {
         const values: any = this.client;
-        values.birthdate = moment(this.client.birthdate).format('DD/MM/YYYY');
-        this.form.patchValue({ ...values });
+        if (values) {
+            values.birthdate = new Date(moment(this.client.birthdate, 'DD/MM/YYYY').format());
+            this.form.patchValue({ ...values });
+        }
     }
 
     onClickSave() {
@@ -40,7 +42,6 @@ export class ClientsFormComponent implements OnInit {
         if (this.form.valid) {
             const values = this.form.value;
             values.birthdate = moment(values.birthdate).format('DD/MM/YYYY');
-            console.log(values);
             if (!this.client) {
                 this.clientsService.create(values).then(() => {
                     this.sweetalertService.show(
@@ -51,24 +52,21 @@ export class ClientsFormComponent implements OnInit {
                     this.form.reset();
                 });
             } else {
-                this.clientsService
-                    .update(this.client.id, values)
-                    .then(() => {
-                        this.sweetalertService.show(
-                            environment.messages.title.success,
-                            environment.messages.text.success,
-                            environment.messages.type.success
-                        );
-                        this.bsModalRef.hide();
-                        this.form.reset();
-                    });
+                this.clientsService.update(this.client.id, values).then(() => {
+                    this.sweetalertService.show(
+                        environment.messages.title.success,
+                        environment.messages.text.success,
+                        environment.messages.type.success
+                    );
+                    this.bsModalRef.hide();
+                    this.form.reset();
+                });
             }
         }
     }
 
     private createform() {
         this.form = this.fb.group({
-            id: [null, null],
             name: [null, [Validators.required]],
             lastName: [null, [Validators.required]],
             years: [
@@ -80,7 +78,10 @@ export class ClientsFormComponent implements OnInit {
                     CustomValidators.digits
                 ]
             ],
-            birthdate: [new Date(), [Validators.required, CustomValidators.date]]
+            birthdate: [
+                new Date(),
+                [Validators.required, CustomValidators.date]
+            ]
         });
     }
 }

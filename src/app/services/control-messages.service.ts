@@ -26,7 +26,6 @@ export class ControlMessagesService {
             pattern: 'El valor no es permitido.',
             digits: 'Permitido solo numeros'
         };
-        // console.log(config[validatorName]);
         return config[validatorName];
     }
 

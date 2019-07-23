@@ -56,20 +56,24 @@ export class ClientsListComponent implements OnInit {
         this.eventEdit.emit(client);
     }
 
+    getRenderDate(date: any) {
+        return moment(date, 'DD/MM/YYYY').format('DD/MM/YYYY');
+    }
+
     getDeathDate(date: any) {
         // Los años de mortalidad para una persona en el peru es de 73 años actualmente
-        const yaerBirthdate = moment(date).year();
+        const yaerBirthdate = moment(date, 'DD/MM/YYYY').year();
         const yearCurrent = moment().year();
         const diffYears = 73 - (yaerBirthdate - yearCurrent);
-        return moment(date)
+        return moment(date, 'DD/MM/YYYY')
             .add(diffYears, 'years')
             .format('DD/MM/YYYY');
     }
 
     private showClients() {
         this.clientsService.all().subscribe((res: Client[]) => {
-            this.data.emit(res);
             this.clientsList = res;
+            this.data.emit(res);
         });
     }
 }

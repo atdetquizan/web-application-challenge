@@ -8,7 +8,7 @@
                 <th>Edad</th>
                 <th>Fecha Nacimiento</th>
                 <th *ngIf="hasProjection">Fecha Muerte(Probable)</th>
-                <th>Acciones</th>
+                <th *ngIf="!hasProjection">Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -17,7 +17,7 @@
                 <td class="align-middle">{{ item.name }}</td>
                 <td class="align-middle">{{ item.lastName }}</td>
                 <td class="align-middle">{{ item.years }}</td>
-                <td class="align-middle">{{ item.birthdate  }}</td>
+                <td class="align-middle">{{ getRenderDate(item.birthdate) }}</td>
                 <td class="align-middle" *ngIf="hasProjection">
                     {{ getDeathDate(item.birthdate) }}
                 </td>
