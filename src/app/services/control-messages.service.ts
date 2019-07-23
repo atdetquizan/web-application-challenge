@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ValidatorFn, AbstractControl } from '@angular/forms';
+import { ValidatorFn, AbstractControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 @Injectable({
@@ -23,9 +23,16 @@ export class ControlMessagesService {
             maxlength: `Máximo de caracteres permitidos ${
                 validatorValue.requiredLength
             }`,
-            pattern: 'El valor no es permitido.'
+            pattern: 'El valor no es permitido.',
+            digits: 'Permitido solo numeros'
         };
         // console.log(config[validatorName]);
         return config[validatorName];
+    }
+
+    static markFormGroupTouched(formGroup: FormGroup) {
+        Object.keys(formGroup.controls).forEach((key: any) => {
+            formGroup.controls[key].markAsTouched();
+        });
     }
 }

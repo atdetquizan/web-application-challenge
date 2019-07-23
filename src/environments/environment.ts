@@ -15,13 +15,17 @@ export const environment = {
     },
     messages: {
         title: {
-            success: 'Exito!'
+            success: 'Exito!',
+            warningDelete: '¿Está seguro de eliminar el registro?'
         },
         text: {
-            success: 'Se registro correctamente su información'
+            success: 'Se registro correctamente su información',
+            successDelete: 'Se elimino correctamente la información.',
+            warningDelete: 'Se eliminara toda la informacion del registro seleccionado.'
         },
         type: {
-            success: 'success'
+            success: 'success',
+            warning: 'warning'
         }
     }
 };

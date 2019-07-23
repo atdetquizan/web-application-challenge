@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Client } from '../../interfaces/client';
 import { BsModalService } from 'ngx-bootstrap';
 import { ClientsFormComponent } from '../clients-form/clients-form.component';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-clients-index',
@@ -17,11 +18,11 @@ export class ClientsIndexComponent implements OnInit {
     }
 
     onEventClick() {
-        const initialState = {};
-        this.bsModalRef.show(ClientsFormComponent, {
-            class: 'modal-dialog-centered',
-            initialState
-        });
+        this.showFormComponent();
+    }
+
+    onEventEdit(client: Client) {
+        this.showFormComponent(client);
     }
 
     getAverage() {
@@ -45,6 +46,17 @@ export class ClientsIndexComponent implements OnInit {
             return Math.sqrt(vari);
         }
         return 0;
+    }
+
+    private showFormComponent(client?: Client) {
+        const initialState: any = {};
+        if (client) {
+            initialState.client = client;
+        }
+        this.bsModalRef.show(ClientsFormComponent, {
+            class: 'modal-dialog-centered',
+            initialState
+        });
     }
 
     private getTotal() {

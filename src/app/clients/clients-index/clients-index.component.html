@@ -11,5 +11,5 @@
             <small>DESVIACION ESTÁNDAR</small>
         </div>
     </div>
-    <app-clients-list (data)="clientsList = $event"></app-clients-list>
+    <app-clients-list (data)="clientsList = $event" (eventEdit)="onEventEdit($event)"></app-clients-list>
 </app-card>

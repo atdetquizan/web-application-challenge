@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { map } from 'rxjs/operators';
 import { Client } from '../interfaces/client';
+import { UpdateClientDto } from '../interfaces/update-client-dto';
 
 @Injectable({
     providedIn: 'root'
@@ -37,10 +38,18 @@ export class ClientsService {
     }
 
     // Actualiza un cliente
-    update(clientId: string, data: Client) {
+    update(clientId: string, data: UpdateClientDto) {
         return this.firestore
             .collection('clients')
             .doc(clientId)
             .set(data);
+    }
+
+    // Actualiza un cliente
+    delete(clientId: string) {
+        return this.firestore
+            .collection('clients')
+            .doc(clientId)
+            .delete();
     }
 }

@@ -8,6 +8,6 @@ export class SweetalertService {
     constructor() { }
 
     show(...arg: any) {
-        swal(...arg);
+        return swal(...arg);
     }
 }

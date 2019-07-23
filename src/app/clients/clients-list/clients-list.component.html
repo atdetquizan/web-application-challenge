@@ -1,6 +1,6 @@
 <div class="container-table">
-    <table class="table">
-        <thead>
+    <table class="table table-bordered table-striped">
+        <thead class="sticky-top">
             <tr>
                 <th>#</th>
                 <th>Nombres</th>
@@ -8,17 +8,28 @@
                 <th>Edad</th>
                 <th>Fecha Nacimiento</th>
                 <th *ngIf="hasProjection">Fecha Muerte(Probable)</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
             <tr *ngFor="let item of clientsList; let i = index">
-                <th>{{ i + 1 }}</th>
-                <td>{{ item.name }}</td>
-                <td>{{ item.lastName }}</td>
-                <td>{{ item.years }}</td>
-                <td>{{ item.birthdate | date:'dd/mm/yyyy' }}</td>
-                <td *ngIf="hasProjection">
+                <th class="align-middle">{{ i + 1 }}</th>
+                <td class="align-middle">{{ item.name }}</td>
+                <td class="align-middle">{{ item.lastName }}</td>
+                <td class="align-middle">{{ item.years }}</td>
+                <td class="align-middle">{{ item.birthdate  }}</td>
+                <td class="align-middle" *ngIf="hasProjection">
                     {{ getDeathDate(item.birthdate) }}
+                </td>
+                <td class="align-middle" *ngIf="!hasProjection">
+                    <div class="btn-group btn-group-sm">
+                        <button type="button" class="btn btn-primary" (click)="onClickEdit(item)">
+                            <i class="fas fa-user-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger" (click)="onClickDelete(item)">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
                 </td>
             </tr>
         </tbody>

@@ -3,6 +3,8 @@ import { ClientsService } from '../../services/clients.service';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { Client } from '../../interfaces/client';
 import * as moment from 'moment';
+import { SweetalertService } from 'src/app/services/sweetalert.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: 'app-clients-list',
@@ -13,7 +15,11 @@ export class ClientsListComponent implements OnInit {
     clientsList: Client[] = [];
     @Input() hasProjection = false;
     @Output() data: EventEmitter<any> = new EventEmitter();
-    constructor(private clientsService: ClientsService) {}
+    @Output() eventEdit: EventEmitter<any> = new EventEmitter();
+    constructor(
+        private clientsService: ClientsService,
+        private sweetalertService: SweetalertService
+    ) {}
 
     ngOnInit() {
         this.showClients();
@@ -21,6 +27,33 @@ export class ClientsListComponent implements OnInit {
             '.container-table'
         );
         const ps = new PerfectScrollbar(container);
+    }
+
+    onClickDelete(item: any) {
+        this.sweetalertService
+            .show({
+                title: environment.messages.title.warningDelete,
+                text: environment.messages.text.warningDelete,
+                icon: environment.messages.type.warning,
+                buttons: true,
+                dangerMode: true
+            })
+            .then(willDelete => {
+                if (willDelete) {
+                    this.clientsService.delete(item.id).then(() => {
+                        this.sweetalertService.show(
+                            environment.messages.text.successDelete,
+                            {
+                                icon: environment.messages.type.success
+                            }
+                        );
+                    });
+                }
+            });
+    }
+
+    onClickEdit(client: any) {
+        this.eventEdit.emit(client);
     }
 
     getDeathDate(date: any) {

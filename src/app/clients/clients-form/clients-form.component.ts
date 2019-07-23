@@ -5,6 +5,10 @@ import { ClientsService } from 'src/app/services/clients.service';
 
 import { environment } from 'src/environments/environment';
 import { SweetalertService } from 'src/app/services/sweetalert.service';
+import { CustomValidators } from 'ngx-custom-validators';
+import { ControlMessagesService } from 'src/app/services/control-messages.service';
+import { Client } from 'src/app/interfaces/client';
+import * as moment from 'moment';
 
 @Component({
     selector: 'app-clients-form',
@@ -13,6 +17,7 @@ import { SweetalertService } from 'src/app/services/sweetalert.service';
 })
 export class ClientsFormComponent implements OnInit {
     form: FormGroup;
+    client: Client;
     maxDate: any;
     constructor(
         public bsModalRef: BsModalRef,
@@ -24,30 +29,58 @@ export class ClientsFormComponent implements OnInit {
         this.maxDate = new Date();
     }
 
-    ngOnInit() {}
+    ngOnInit() {
+        const values: any = this.client;
+        values.birthdate = moment(this.client.birthdate).format('DD/MM/YYYY');
+        this.form.patchValue({ ...values });
+    }
 
     onClickSave() {
-        const values = this.form.value;
-        values.birthdate = values.birthdate.toString();
-        this.clientsService.create(values).then(() => {
-            this.sweetalertService.show(
-                environment.messages.title.success,
-                environment.messages.text.success,
-                environment.messages.type.success
-            );
-            this.form.reset();
-        });
+        ControlMessagesService.markFormGroupTouched(this.form);
+        if (this.form.valid) {
+            const values = this.form.value;
+            values.birthdate = moment(values.birthdate).format('DD/MM/YYYY');
+            console.log(values);
+            if (!this.client) {
+                this.clientsService.create(values).then(() => {
+                    this.sweetalertService.show(
+                        environment.messages.title.success,
+                        environment.messages.text.success,
+                        environment.messages.type.success
+                    );
+                    this.form.reset();
+                });
+            } else {
+                this.clientsService
+                    .update(this.client.id, values)
+                    .then(() => {
+                        this.sweetalertService.show(
+                            environment.messages.title.success,
+                            environment.messages.text.success,
+                            environment.messages.type.success
+                        );
+                        this.bsModalRef.hide();
+                        this.form.reset();
+                    });
+            }
+        }
     }
 
     private createform() {
         this.form = this.fb.group({
+            id: [null, null],
             name: [null, [Validators.required]],
             lastName: [null, [Validators.required]],
             years: [
                 null,
-                [Validators.required, Validators.min(1), Validators.max(122)]
+                [
+                    Validators.required,
+                    Validators.min(1),
+                    Validators.max(122),
+                    CustomValidators.digits
+                ]
             ],
-            birthdate: [null, [Validators.required]]
+            birthdate: [new Date(), [Validators.required, CustomValidators.date]]
         });
     }
 }
