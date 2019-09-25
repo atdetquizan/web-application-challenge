@@ -6,6 +6,8 @@ import { ClientsService } from './services/clients.service';
 import { Client } from './interfaces/client';
 
 import PerfectScrollbar from 'perfect-scrollbar';
+import { LocationStrategy } from '@angular/common';
+import { CanNavigateService } from './services/CanNavigateService';
 
 @Component({
     selector: 'app-root',
@@ -14,4 +16,11 @@ import PerfectScrollbar from 'perfect-scrollbar';
 })
 export class AppComponent  {
     title = 'web-application-challenge';
+    constructor(private location: LocationStrategy,
+        private canNavigateService: CanNavigateService){
+        this.location.onPopState(() => {
+            this.canNavigateService.setBackClicked(true);
+            return false;
+          });
+    }
 }

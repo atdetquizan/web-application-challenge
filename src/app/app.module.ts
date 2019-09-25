@@ -11,6 +11,8 @@ import { ClientsListComponent } from './clients/clients-list/clients-list.compon
 import { ClientsIndexComponent } from './clients/clients-index/clients-index.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ClientsProjectionComponent } from './clients/clients-projection/clients-projection.component';
+import { CanNavigateService } from './services/CanNavigateService';
+import { NavigationGuard } from './services/NavigationGuard';
 
 @NgModule({
     declarations: [
@@ -25,7 +27,7 @@ import { ClientsProjectionComponent } from './clients/clients-projection/clients
         AppRoutingModule,
         CoreModule
     ],
-    providers: [ClientsService],
+    providers: [ClientsService, CanNavigateService, NavigationGuard],
     bootstrap: [AppComponent],
     entryComponents: [ClientsFormComponent]
 })
